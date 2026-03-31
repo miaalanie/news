@@ -3,385 +3,208 @@
 @section('title', 'Home')
 
 @section('content')
-<!-- Main News Slider Start -->
-<div class="container-fluid">
+
+<div class="container mt-4">
+
     <div class="row">
-        <div class="col-lg-7 px-0">
-            <div class="owl-carousel main-carousel position-relative">
-                @forelse ($all_news->where('news_position', 'Top Slider') as $news)
-                <div class="position-relative overflow-hidden" style="height: 500px;">
-                    <img class="img-fluid h-100" src="{{ asset('uploads/news_thumbnail_photo') }}/{{ $news->news_thumbnail_photo }}" style="object-fit: cover;">
-                    <div class="overlay">
-                        <div class="mb-2">
-                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                href="{{ route('category.wise.news', $news->relationtocategory->category_slug) }}">{{ $news->relationtocategory->category_name }}</a>
-                            <a class="text-white" href="#">{{ $news->created_at->format('d-M, Y') }}</a>
-                        </div>
-                        <a class="h2 m-0 text-white text-uppercase font-weight-bold" href="{{ route('news.details', $news->news_slug) }}">{!! substr($news->news_headline, 0, 50) . '...' !!}</a>
-                    </div>
+        <!-- HERO BESAR -->
+        <div class="col-lg-8">
+            <div class="card border-0">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/31/IMG_3561.jpg"
+                     class="card-img-top"
+                     style="height:420px; object-fit:cover;">
+
+                <div class="card-img-overlay d-flex flex-column justify-content-end"
+                     style="background:linear-gradient(transparent,rgba(0,0,0,.7));">
+
+                    <h3 class="text-white font-weight-bold">
+                        <a class="text-white"
+                           href="https://www.antaranews.com/berita/5502262/china-sebut-dukung-upaya-mediasi-pakistan-ke-as-dan-iran">
+                            China sebut dukung upaya mediasi Pakistan ke AS dan Iran
+                        </a>
+                    </h3>
+
+                    <small class="text-white">
+                        2026-03-31
+                    </small>
+
                 </div>
-                @empty
-                <div class="alert alert-danger">
-                    <span>{{ __('messages.not_found') }}</span>
-                </div>
-                @endforelse
             </div>
         </div>
-        <div class="col-lg-5 px-0">
-            <div class="row mx-0">
-                @forelse ($all_news->where('news_position', 'Top Right') as $news)
-                <div class="col-md-6 px-0">
-                    <div class="position-relative overflow-hidden" style="height: 250px;">
-                        <img class="img-fluid w-100 h-100" src="{{ asset('uploads/news_thumbnail_photo') }}/{{ $news->news_thumbnail_photo }}" style="object-fit: cover;">
-                        <div class="overlay">
-                            <div class="mb-2">
-                                <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                    href="{{ route('category.wise.news', $news->relationtocategory->category_slug) }}">{{ $news->relationtocategory->category_name }}</a>
-                                <a class="text-white" href="#"><small>{{ $news->created_at->format('d-M, Y') }}</small></a>
-                            </div>
-                            <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{{ route('news.details', $news->news_slug) }}">{!! substr($news->news_headline, 0, 25) . '...' !!}</a>
-                        </div>
-                    </div>
+
+        <!-- LATEST -->
+        <div class="col-lg-4">
+            <h5 class="font-weight-bold mb-3">Latest post</h5>
+
+            <div class="d-flex mb-3">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/31/WhatsApp-Image-2026-03-30-at-11.21.59.jpeg"
+                     width="90"
+                     height="70"
+                     style="object-fit:cover"
+                     class="rounded">
+
+                <div class="pl-3">
+                    <h6 class="mb-1">
+                        <a href="https://www.antaranews.com/berita/5502250/perempuan-harus-berdaya-kemenpppa-soroti-penguatan-sdm-dan-organisasi"
+                           class="text-dark">
+                           Perempuan harus berdaya, KemenPPPA soroti penguatan SDM dan organisasi
+                        </a>
+                    </h6>
+
+                    <small class="text-muted">
+                        2026-03-31 • 5 min read
+                    </small>
                 </div>
-                @empty
-                <div class="alert alert-danger">
-                    <span>{{ __('messages.not_found') }}</span>
+            </div>
+
+            <div class="d-flex mb-3">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/30/dialog-antikorupsi-kpk-dengan-pemprov-jateng-2763542.jpg"
+                     width="90"
+                     height="70"
+                     style="object-fit:cover"
+                     class="rounded">
+
+                <div class="pl-3">
+                    <h6 class="mb-1">
+                        <a href="https://www.antaranews.com/berita/5502258/kpk-fokus-awasi-tiga-sektor-rawan-korupsi-di-jawa-tengah"
+                           class="text-dark">
+                           KPK fokus awasi tiga sektor rawan korupsi di Jawa Tengah
+                        </a>
+                    </h6>
+
+                    <small class="text-muted">
+                        2026-03-31 • 10 min read
+                    </small>
                 </div>
-                @endforelse
+            </div>
+
+            <div class="d-flex mb-3">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/25/Pembukaan-IHSG-usai-libur-Lebaran.jpg250326-Ada-2.jpg"
+                     width="90"
+                     height="70"
+                     style="object-fit:cover"
+                     class="rounded">
+
+                <div class="pl-3">
+                    <h6 class="mb-1">
+                        <a href="https://www.antaranews.com/berita/5502246/ihsg-selasa-dibuka-menguat-3132-poin"
+                           class="text-dark">
+                           IHSG Selasa dibuka menguat 31,32 poin
+                        </a>
+                    </h6>
+
+                    <small class="text-muted">
+                        2026-03-31 • 15 min read
+                    </small>
+                </div>
+            </div>
+
+            <div class="d-flex mb-3">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/31/CjkinzN000033_20260330_CBMFN0A001.jpg"
+                     width="90"
+                     height="70"
+                     style="object-fit:cover"
+                     class="rounded">
+
+                <div class="pl-3">
+                    <h6 class="mb-1">
+                        <a href="https://www.antaranews.com/berita/5502242/korsel-konfirmasi-impor-perdana-nafta-rusia-sejak-konflik-timur-tengah"
+                           class="text-dark">
+                           Korsel konfirmasi impor perdana nafta Rusia sejak konflik timur tengah"
+                        </a>
+                    </h6>
+
+                    <small class="text-muted">
+                        2026-03-31 • 20 min read
+                    </small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- FOUNDERS -->
+    <div class="mt-5">
+    <h4 class="font-weight-bold mb-4">Founders corner</h4>
+
+    <div class="row">
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/25/Rupiah-Terus-Melemah-Terhadap-Dolar-100326-Adm-3.jpg"
+                     class="card-img-top"
+                     style="height:200px; object-fit:cover;">
+
+                <div class="card-body">
+                    <span class="badge badge-warning mb-2">Rupiah</span>
+
+                    <h5 class="font-weight-bold">
+                        <a href="#" class="text-dark">
+                            Rupiah pada Selasa pagi menguat jadi Rp16.987 per dolar AS
+                        </a>
+                    </h5>
+
+                    <p class="text-muted">
+                        Nilai tukar rupiah pada Selasa pagi menguat 15 poin...
+                    </p>
+
+                    <small class="text-muted">2026-03-31 • 10 min read</small>
+                </div>
             </div>
         </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/31/CjkinzN000039_20260330_CBMFN0A001.jpg"
+                     class="card-img-top"
+                     style="height:200px; object-fit:cover;">
+
+                <div class="card-body">
+                    <span class="badge badge-warning mb-2">Liburan</span>
+
+                    <h5 class="font-weight-bold">
+                        <a href="#" class="text-dark">
+                            Proyek LMC ubah hidup warga Mekong, air bersih kini kian dekat
+                        </a>
+                    </h5>
+
+                    <p class="text-muted">
+                        Sebelum 2021, warga Desa Hatkeep di Provinsi Luang Prabang...
+                    </p>
+
+                    <small class="text-muted">2026-03-31 • 10 min read</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/31/372979.jpg"
+                     class="card-img-top"
+                     style="height:200px; object-fit:cover;">
+
+                <div class="card-body">
+                    <span class="badge badge-warning mb-2">Boxing</span>
+
+                    <h5 class="font-weight-bold">
+                        <a href="#" class="text-dark">
+                            Nasukawa dan Estrada naik ring rebut peluang hadapi juara dunia WBC
+                        </a>
+                    </h5>
+
+                    <p class="text-muted">
+                        World Boxing Council mengumumkan Tenshin Nasukawa, Juan Francisco
+                    </p>
+
+                    <small class="text-muted">2026-03-31 • 10 min read</small>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
-<!-- Main News Slider End -->
 
-<!-- Featured News Slider Start -->
-<div class="container-fluid pt-5 mb-3">
-    <div class="container">
-        <div class="section-title">
-            <h4 class="m-0 text-uppercase font-weight-bold">{{ __('messages.featured_news') }}</h4>
-        </div>
-        <div class="owl-carousel news-carousel carousel-item-4 position-relative">
-            @forelse ($all_news->where('news_position', 'Featured') as $news)
-            <div class="position-relative overflow-hidden" style="height: 300px;">
-                <img class="img-fluid h-100" src="{{ asset('uploads/news_thumbnail_photo') }}/{{ $news->news_thumbnail_photo }}" style="object-fit: cover;">
-                <div class="overlay">
-                    <div class="mb-2">
-                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2" href="{{ route('category.wise.news', $news->relationtocategory->category_slug) }}">{{ $news->relationtocategory->category_name }}</a>
-                    </div>
-                    <div class="mb-2">
-                        <a class="text-white" href="#"><small>{{ $news->created_at->format('d-M, Y') }}</small></a>
-                    </div>
-                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="{{ route('news.details', $news->news_slug) }}">{!! substr($news->news_headline, 0, 25) . '...' !!}</a>
-                </div>
-            </div>
-            @empty
-            <div class="alert alert-danger">
-                <span>{{ __('messages.not_found') }}</span>
-            </div>
-            @endforelse
-        </div>
-    </div>
 </div>
-<!-- Featured News Slider End -->
 
-<!-- News With Sidebar Start -->
-    <div class="container-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="section-title">
-                                <h4 class="m-0 text-uppercase font-weight-bold">{{ __('messages.latest_news') }}</h4>
-                                <a class="text-secondary font-weight-medium text-decoration-none" href="{{ route('all.news') }}">{{ __('messages.view_all') }}</a>
-                            </div>
-                        </div>
-                        @forelse ($all_news->where('news_position', 'Default') as $news)
-                            @if ($loop->index == 0 || $loop->index == 1)
-                                <div class="col-lg-6">
-                                    <div class="position-relative mb-3">
-                                        <img class="img-fluid w-100" src="{{ asset('uploads/news_thumbnail_photo') }}/{{ $news->news_thumbnail_photo }}" style="object-fit: cover;">
-                                        <div class="bg-white border border-top-0 p-4">
-                                            <div class="d-flex align-items-center mb-3">
-                                                <img class="rounded-circle mr-2" src="{{ asset('uploads/profile_photo') }}/{{ $news->relationtouser->profile_photo }}" width="25" height="25" alt="">
-                                                <small><a href="{{ route('reporter.wise.news', $news->relationtouser->id) }}">{{ $news->relationtouser->name }}</a></small>
-                                            </div>
-                                            <div class="mb-2">
-                                                <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                                    href="{{ route('category.wise.news', $news->relationtocategory->category_slug) }}">{{ $news->relationtocategory->category_name }}</a>
-                                                <a class="text-body" href="#"><small>{{ $news->created_at->format('d-M, Y') }}</small></a>
-                                            </div>
-                                            <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{{ route('
-                                            
-                                            details', $news->news_slug) }}">{!! substr($news->news_headline, 0, 25) . '...' !!}</a>
-                                            <p class="m-0">{!! substr($news->news_details, 0, 50) . '...' !!}</p>
-                                        </div>
-                                        <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
-                                            <div class="d-flex align-items-center">
-                                                <small class="ml-3"><i class="far fa-eye mr-2"></i>{{ $news->news_view }}</small>
-                                                <small class="ml-3"><i class="far fa-comment mr-2"></i>{{ App\Models\Comment::where('news_id', $news->id)->count() }}</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        @empty
-                        <div class="alert alert-danger">
-                            <span>{{ __('messages.not_found') }}</span>
-                        </div>
-                        @endforelse
-
-                        @forelse ($advertisements->where('advertisement_position', 'Center Top')->take(1) as $advertisement)
-                            <div class="col-lg-12 mb-3">
-                                <a target="_blank" href="{{ $advertisement->advertisement_link }}"><img class="img-fluid w-100" src="{{ asset('uploads/advertisement_photo') }}/{{ $advertisement->advertisement_photo }}" alt="{{ $advertisement->advertisement_title }}"></a>
-                            </div>
-                        @empty
-                        <span class="text-danger">{{ __('messages.not_found') }}</span>
-                        @endforelse
-
-                        @foreach ($all_news->where('news_position', 'Default') as $news)
-                            @if ($loop->index == 2 || $loop->index == 3)
-                            <div class="col-lg-6">
-                                <div class="position-relative mb-3">
-                                    <img class="img-fluid w-100" src="{{ asset('uploads/news_thumbnail_photo') }}/{{ $news->news_thumbnail_photo }}" style="object-fit: cover;">
-                                    <div class="bg-white border border-top-0 p-4">
-                                        <div class="d-flex align-items-center mb-3">
-                                            <img class="rounded-circle mr-2" src="{{ asset('uploads/profile_photo') }}/{{ $news->relationtouser->profile_photo }}" width="25" height="25" alt="">
-                                            <small><a href="{{ route('reporter.wise.news', $news->relationtouser->id) }}">{{ $news->relationtouser->name }}</a></small>
-                                        </div>
-                                        <div class="mb-2">
-                                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                                href="{{ route('category.wise.news', $news->relationtocategory->category_slug) }}">{{ $news->relationtocategory->category_name }}</a>
-                                            <a class="text-body" href="#"><small>{{ $news->created_at->format('d-M, Y') }}</small></a>
-                                        </div>
-                                        <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{{ route('news.details', $news->news_slug) }}">{!! substr($news->news_headline, 0, 25) . '...' !!}</a>
-                                        <p class="m-0">{!! substr($news->news_details, 0, 50) . '...' !!}</p>
-                                    </div>
-                                    <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
-                                        <div class="d-flex align-items-center">
-                                            <small class="ml-3"><i class="far fa-eye mr-2"></i>{{ $news->news_view }}</small>
-                                            <small class="ml-3"><i class="far fa-comment mr-2"></i>{{ App\Models\Comment::where('news_id', $news->id)->count() }}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
-                            @if ($loop->index == 4 || $loop->index == 5 || $loop->index == 6 || $loop->index == 7)
-                            <div class="col-lg-6">
-                                <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                    <img width="110" height="110" src="{{ asset('uploads/news_thumbnail_photo') }}/{{ $news->news_thumbnail_photo }}" alt="">
-                                    <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                        <div class="mb-2">
-                                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="{{ route('category.wise.news', $news->relationtocategory->category_slug) }}">{{ $news->relationtocategory->category_name }}</a>
-                                            <a class="text-body" href="#"><small>{{ $news->created_at->format('d-M, Y') }}</small></a>
-                                        </div>
-                                        <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ route('news.details', $news->news_slug) }}">{!! substr($news->news_headline, 0, 25) . '...' !!}</a>
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
-                        @endforeach
-
-                        @forelse ($advertisements->where('advertisement_position', 'Center Bottom')->take(1) as $advertisement)
-                            <div class="col-lg-12 mb-3">
-                                <a target="_blank" href="{{ $advertisement->advertisement_link }}"><img class="img-fluid w-100" src="{{ asset('uploads/advertisement_photo') }}/{{ $advertisement->advertisement_photo }}" alt="{{ $advertisement->advertisement_title }}"></a>
-                            </div>
-                        @empty
-                            <span class="text-danger">{{ __('messages.not_found') }}</span>
-                        @endforelse
-
-                        @foreach ($all_news->where('news_position', 'Default') as $news)
-                            @if ($loop->index == 8)
-                                <div class="col-lg-12">
-                                    <div class="row news-lg mx-0 mb-3">
-                                        <div class="col-md-6 h-100 px-0">
-                                            <img class="img-fluid h-100" src="{{ asset('uploads/news_thumbnail_photo') }}/{{ $news->news_thumbnail_photo }}" style="object-fit: cover;">
-                                        </div>
-                                        <div class="col-md-6 d-flex flex-column border bg-white h-100 px-0">
-                                            <div class="mt-auto p-4">
-                                                <div class="d-flex align-items-center mb-3">
-                                                    <img class="rounded-circle mr-2" src="{{ asset('uploads/profile_photo') }}/{{ $news->relationtouser->profile_photo }}" width="25" height="25" alt="">
-                                                    <small><a href="{{ route('reporter.wise.news', $news->relationtouser->id) }}">{{ $news->relationtouser->name }}</a></small>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                                        href="{{ route('category.wise.news', $news->relationtocategory->category_slug) }}">{{ $news->relationtocategory->category_name }}</a>
-                                                    <a class="text-body" href="#"><small>{{ $news->created_at->format('d-M, Y') }}</small></a>
-                                                </div>
-                                                <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="{{ route('news.details', $news->news_slug) }}">{{ $news->news_headline  }}</a>
-                                                <p class="m-0">{!! substr($news->news_details, 0, 50) . '...' !!}</p>
-                                            </div>
-                                            <div class="d-flex justify-content-between bg-white border-top mt-auto p-4">
-                                                <div class="d-flex align-items-center">
-                                                    <small class="ml-3"><i class="far fa-eye mr-2"></i>{{ $news->news_view }}</small>
-                                                    <small class="ml-3"><i class="far fa-comment mr-2"></i>{{ App\Models\Comment::where('news_id', $news->id)->count() }}</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if ($loop->index == 9 || $loop->index == 10 || $loop->index == 11 || $loop->index == 12)
-                                <div class="col-lg-6">
-                                    <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                        <img width="110" height="110" src="{{ asset('uploads/news_thumbnail_photo') }}/{{ $news->news_thumbnail_photo }}" alt="">
-                                        <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                            <div class="mb-2">
-                                                <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="{{ route('category.wise.news', $news->relationtocategory->category_slug) }}">{{ $news->relationtocategory->category_name }}</a>
-                                                <a class="text-body" href="#"><small>{{ $news->created_at->format('d-M, Y') }}</small></a>
-                                            </div>
-                                            <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ route('news.details', $news->news_slug) }}">{!! substr($news->news_headline, 0, 25) . '...' !!}.</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-                <div class="col-lg-4">
-
-    
-
-                    <!-- Popular News Start -->
-                    <div class="mb-3">
-                        <div class="section-title mb-0">
-                            <h4 class="m-0 text-uppercase font-weight-bold">{{ __('messages.tranding_news') }}</h4>
-                        </div>
-                        <div class="bg-white border border-top-0 p-3">
-                            @forelse ($tranding_news->take(5) as $news)
-                            <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                                <img width="100" height="100" src="{{ asset('uploads/news_thumbnail_photo') }}/{{ $news->news_thumbnail_photo }}" alt="">
-                                <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                    <div class="mb-2">
-                                        <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="{{ route('category.wise.news', $news->relationtocategory->category_slug) }}">{{ $news->relationtocategory->category_name }}</a>
-                                        <br>
-                                        <a class="text-body" href="#"><small>{{ $news->created_at->format('d-M, Y') }}</small></a>
-                                    </div>
-                                    <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{{ route('news.details', $news->news_slug) }}">{!! substr($news->news_headline, 0, 25) . '...' !!}</a>
-                                </div>
-                            </div>
-                            @empty
-                            <div class="alert alert-warning" role="alert">
-                            <span>{{ __('messages.not_found') }}</span>
-                            </div>
-                            @endforelse
-                        </div>
-                    </div>
-                    <!-- Popular News End -->
-                </div>
-            </div>
-        </div>
-    </div>
-<!-- News With Sidebar End -->
-@endsection
-
-@section('script')
-<script>
-
-    (function() {
-        var $gallery = new SimpleLightbox('.photo_gallery a', {});
-    })();
-
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('.select_country').select2({
-            placeholder: '{{ __('messages.select_country') }}',
-        });
-        $('.select_division').select2({
-            placeholder: '{{ __('messages.select_division') }}',
-        });
-        $('.select_district').select2({
-            placeholder: '{{ __('messages.select_district') }}',
-        });
-        $('.select_upazila').select2({
-            placeholder: '{{ __('messages.select_upazila') }}',
-        });
-        $('.select_union').select2({
-            placeholder: '{{ __('messages.select_union') }}',
-        });
-
-        // Divisions Data
-        $('#division_col').hide();
-        $(document).on('change', '.select_country', function(e){
-            e.preventDefault();
-            var country_id = $(this).val();
-            $.ajax({
-                url: '{{ route('get.divisions') }}',
-                method: 'POST',
-                data: {country_id:country_id},
-                success: function(response) {
-                    $('#all_division').html(response.send_data);
-                    if (response.count > 0) {
-                        $('#division_col').show();
-                    } else {
-                        $('#division_col').hide();
-                    }
-                }
-            });
-        })
-        // District Data
-        $('#district_col').hide();
-        $(document).on('change', '.select_division', function(e){
-            e.preventDefault();
-            var division_id = $(this).val();
-            $.ajax({
-                url: '{{ route('get.districts') }}',
-                method: 'POST',
-                data: {division_id:division_id},
-                success: function(response) {
-                    $('#all_district').html(response.send_data);
-                    if (response.count > 0) {
-                        $('#district_col').show();
-                    } else {
-                        $('#district_col').hide();
-                    }
-                }
-            });
-        })
-        // Upazila Data
-        $('#upazila_col').hide();
-        $(document).on('change', '.select_district', function(e){
-            e.preventDefault();
-            var district_id = $(this).val();
-            $.ajax({
-                url: '{{ route('get.upazilas') }}',
-                method: 'POST',
-                data: {district_id:district_id},
-                success: function(response) {
-                    $('#all_upazila').html(response.send_data);
-                    if (response.count > 0) {
-                        $('#upazila_col').show();
-                    } else {
-                        $('#upazila_col').hide();
-                    }
-                }
-            });
-        })
-        // Union Data
-        $('#union_col').hide();
-        $(document).on('change', '.select_upazila', function(e){
-            e.preventDefault();
-            var upazila_id = $(this).val();
-            $.ajax({
-                url: '{{ route('get.unions') }}',
-                method: 'POST',
-                data: {upazila_id:upazila_id},
-                success: function(response) {
-                    $('#all_union').html(response.send_data);
-                    if (response.count > 0) {
-                        $('#union_col').show();
-                    } else {
-                        $('#union_col').hide();
-                    }
-                }
-            });
-        })
-    });
-</script>
 @endsection

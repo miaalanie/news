@@ -9783,3 +9783,37 @@ h6,
     text-transform: uppercase;
     margin-right: 40px;
 }
+
+.card-img-overlay a{
+    text-decoration:none;
+}
+
+.card-img-overlay a:hover{
+    color:#ffc107 !important;
+}
+
+.card{
+    border-radius:20px;
+}
+
+.shadow-sm{
+    box-shadow:0 4px 20px rgba(0,0,0,.05)!important;
+}
+
+.card {
+    border-radius: 16px !important;
+    overflow: hidden;
+}
+
+.card img {
+    border-radius: 16px;
+}
+
+.card-img-top {
+    border-top-left-radius: 16px !important;
+    border-top-right-radius: 16px !important;
+}
+
+.card-img-overlay {
+    border-radius: 16px;
+}

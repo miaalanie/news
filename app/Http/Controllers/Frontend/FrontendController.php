@@ -3,16 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\AboutUs;
 use App\Models\Admin;
-use App\Models\Advertisement;
-use App\Models\Category;
-use App\Models\CategoryTranslation;
 use App\Models\Comment;
 use App\Models\Comment_reply;
 use App\Models\Contact_message;
 use App\Models\DefaultSetting;
-use App\Models\District;
 use App\Models\Division;
 use App\Models\News;
 use App\Models\NewsTranslation;
@@ -22,8 +17,6 @@ use App\Models\Photo_gallery;
 use App\Models\Video_gallery;
 use App\Models\Seo_setting;
 use App\Models\Subscriber;
-use App\Models\Tag;
-use App\Models\TagTranslation;
 use App\Models\Union;
 use App\Models\Upazila;
 use Carbon\Carbon;
@@ -43,10 +36,8 @@ class FrontendController extends Controller
     {
         $seo_setting = Seo_setting::first();
         $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
         $all_news = News::where('status', 'Active')->get();
         $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
         $photo_galleries = Photo_gallery::where('status', 'Active')->latest()->take(8)->get();
         $video_galleries = Video_gallery::where('status', 'Active')->latest()->take(8)->get();
         $countries_id = News::where('country_id', '!=', NULL)->groupBy('country_id')->pluck('country_id');
@@ -67,7 +58,7 @@ class FrontendController extends Controller
         JsonLd::setDescription($seo_setting->description);
         JsonLd::addImage(url()->current().'/uploads/default_photo/'.$seo_setting->seo_image);
 
-        return view('frontend.index', compact('default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'photo_galleries', 'video_galleries', 'countries_id'));
+        return view('frontend.index', compact('default_setting', 'all_news', 'tranding_news','photo_galleries', 'video_galleries', 'countries_id'));
     }
 
     public function changeLanguage(Request $request)
@@ -125,139 +116,51 @@ class FrontendController extends Controller
         }
 
         $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
         $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
         $categories = Category::where('status', 'Active')->get();
-        return view('frontend.search-news', compact('search_data', 'default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'categories'));
+        return view('frontend.search-news', compact('search_data', 'default_setting',  'all_news', 'tranding_news', 'categories'));
     }
 
     public function todayNews()
     {
         $archive_date = date('Y-m-d');
         $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
         $all_news = News::where('status', 'Active')->where('news.created_at', 'LIKE', '%'.$archive_date.'%')->paginate(16);
         $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.archive-news', compact('default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'archive_date', 'categories'));
+        return view('frontend.archive-news', compact('default_setting',  'all_news', 'tranding_news', ));
     }
     public function politikNews()
     {
         $archive_date = date('Y-m-d');
         $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
         $all_news = News::where('status', 'Active')->where('news.created_at', 'LIKE', '%'.$archive_date.'%')->paginate(16);
         $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.archive-news', compact('default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'archive_date', 'categories'));
+        return view('frontend.archive-news', compact('default_setting', 'all_news', 'tranding_news'));
     }
     public function teknoNews()
     {
         $archive_date = date('Y-m-d');
         $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
         $all_news = News::where('status', 'Active')->where('news.created_at', 'LIKE', '%'.$archive_date.'%')->paginate(16);
         $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.archive-news', compact('default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'archive_date', 'categories'));
+        return view('frontend.archive-news', compact('default_setting',  'all_news', 'tranding_news'));
     }
     
     public function hiburanNews()
     {
         $archive_date = date('Y-m-d');
         $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
         $all_news = News::where('status', 'Active')->where('news.created_at', 'LIKE', '%'.$archive_date.'%')->paginate(16);
         $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.archive-news', compact('default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'archive_date', 'categories'));
-    }
-    public function archiveNewsResult(Request $request)
-    {
-        $archive_date = $request->archive_date;
-
-        $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
-        $all_news = News::where('status', 'Active')->where('news.created_at', 'LIKE', '%'.$archive_date.'%')->paginate(16);
-        $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.archive-news', compact('default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'archive_date', 'categories'));
+        return view('frontend.archive-news', compact('default_setting',  'all_news', 'tranding_news'));
     }
 
     public function allNews()
     {
         $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
         $all_news = News::where('status', 'Active')->paginate(13);
         $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.all-news', compact('default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'categories'));
-    }
-
-    public function allCategory()
-    {
-        $default_setting = DefaultSetting::first();
-        $all_news = News::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        return view('frontend.all-category', compact('default_setting', 'all_news', 'advertisements', 'tranding_news', 'categories'));
-    }
-
-    public function allTag()
-    {
-        $default_setting = DefaultSetting::first();
-        $all_news = News::where('status', 'Active')->get();
-        $tags = Tag::where('status', 'Active')->get();
-        $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.all-tag', compact('default_setting', 'all_news', 'advertisements', 'tranding_news', 'tags', 'categories'));
-    }
-
-    public function categoryWiseNews($slug)
-    {
-        $category = CategoryTranslation::where('category_slug', $slug)->first();
-        $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
-        $all_news = News::where('status', 'Active')->where('news_category_id', $category->category_id )->paginate(12);
-        $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.category-wise-news', compact('category', 'default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'categories'));
-    }
-
-    public function reporterWiseNews($id)
-    {
-        $reporter = Admin::where('id', $id)->first();
-        $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
-        $all_news = News::where('status', 'Active')->where('created_by', $reporter->id)->paginate(12);
-        $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.reporter-wise-news', compact('reporter', 'default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'categories'));
-    }
-
-    public function tagWiseNews($slug)
-    {
-        $tag = TagTranslation::where('tag_slug', $slug)->first();
-        $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
-
-        $news_id = DB::table('news_tag')->where('tag_id', $tag->tag_id)->groupBy('news_id')->select('news_id')->paginate(12);
-
-        $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.tag-wise-news', compact('tag', 'default_setting', 'tags', 'news_id', 'tranding_news', 'advertisements', 'categories'));
+        return view('frontend.all-news', compact('default_setting', 'all_news', 'tranding_news'));
     }
 
     public function newsDetails($slug)
@@ -266,14 +169,11 @@ class FrontendController extends Controller
         $news_details = News::where('id', $news_id)->first();
         News::where('id', $news_details->id)->increment('news_view');
         $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
         $all_news = News::where('status', 'Active')->get();
         $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
         $related_news = News::where('news_category_id', $news_details->news_category_id)->where('id', '!=', $news_details->id)->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
         $comments = Comment::where('news_id', $news_details->id)->where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-
+       
         SEOMeta::setTitle($news_details->news_title);
         SEOMeta::setDescription($news_details->news_details);
         SEOMeta::setCanonical(url()->current());
@@ -290,7 +190,7 @@ class FrontendController extends Controller
         JsonLd::setDescription($news_details->news_details);
         JsonLd::addImage(env('APP_URL').'/uploads/news_cover_photo/'.$news_details->news_cover_photo);
 
-        return view('frontend.news-details', compact('news_details', 'default_setting', 'tags', 'all_news', 'tranding_news', 'related_news', 'advertisements', 'comments', 'categories'));
+        return view('frontend.news-details', compact('news_details', 'default_setting',  'all_news', 'tranding_news', 'related_news',  'comments'));
     }
 
     public function commentStore(Request $request)
@@ -385,29 +285,6 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function allGalleryPhoto()
-    {
-        $default_setting = DefaultSetting::first();
-        $photo_galleries = Photo_gallery::where('status', 'Active')->latest()->paginate(20);
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.all-photo', compact('default_setting', 'photo_galleries', 'categories'));
-    }
-
-    public function allGalleryVideo()
-    {
-        $default_setting = DefaultSetting::first();
-        $video_galleries = Video_gallery::where('status', 'Active')->latest()->paginate(20);
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.all-video', compact('default_setting', 'video_galleries', 'categories'));
-    }
-
-    public function aboutUs()
-    {
-        $default_setting = DefaultSetting::first();
-        $about_us = AboutUs::first();
-        return view('frontend.about', compact('default_setting', 'about_us'));
-    }
-
     public function contactUs()
     {
         $default_setting = DefaultSetting::first();
@@ -460,95 +337,5 @@ class FrontendController extends Controller
                 'status'=>200
             ]);
         }
-    }
-
-    public function getDivisions(Request $request){
-        $send_data = "<option value=''>--Select Division--</option>";
-        $divisions_id = News::where('country_id', $request->country_id)->where('division_id', '!=', NULL)->groupBy('division_id')->select('division_id')->get();
-        foreach ($divisions_id as $division_id) {
-            $division = Division::find($division_id->division_id);
-            $send_data .= "<option value='$division->id' >$division->name</option>";
-        }
-        $divisions_count = $divisions_id->count();
-        return response()->json([
-            'count' => $divisions_count,
-            'send_data' => $send_data
-        ]);
-    }
-
-    public function getDistricts(Request $request){
-        $send_data = "<option value=''>--Select District--</option>";
-        $districts_id = News::where('division_id', $request->division_id)->where('district_id', '!=', NULL)->groupBy('district_id')->select('district_id')->get();
-        foreach ($districts_id as $district_id) {
-            $district = District::find($district_id->district_id);
-            $send_data .= "<option value='$district->id' >$district->name</option>";
-        }
-        $districts_count = $districts_id->count();
-        return response()->json([
-            'count' => $districts_count,
-            'send_data' => $send_data
-        ]);
-    }
-
-    public function getUpazilas(Request $request){
-        $send_data = "<option value=''>--Select Upazila--</option>";
-        $upazilas_id = News::where('district_id', $request->district_id)->where('upazila_id', '!=', NULL)->groupBy('upazila_id')->select('upazila_id')->get();
-        foreach ($upazilas_id as $upazila_id) {
-            $upazila = Upazila::find($upazila_id->upazila_id);
-            $send_data .= "<option value='$upazila->id' >$upazila->name</option>";
-        }
-        $upazilas_count = $upazilas_id->count();
-        return response()->json([
-            'count' => $upazilas_count,
-            'send_data' => $send_data
-        ]);
-    }
-
-    public function getUnions(Request $request){
-        $send_data = "<option value=''>--Select Union--</option>";
-        $unions_id = News::where('upazila_id', $request->upazila_id)->where('union_id', '!=', NULL)->groupBy('union_id')->select('union_id')->get();
-        foreach ($unions_id as $union_id) {
-            $union = Union::find($union_id->union_id);
-            $send_data .= "<option value='$union->id' >$union->name</option>";
-        }
-        $union_count = $union_id->count();
-        return response()->json([
-            'count' => $union_count,
-            'send_data' => $send_data
-        ]);
-    }
-
-    public function locationWiseNews(Request $request){
-        $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
-
-        $all_news = "";
-        $query = News::where('status', 'Active');
-
-        if($request->country_id){
-            $query->where('news.country_id', $request->country_id);
-        }
-        if($request->division_id){
-            $query->where('news.division_id', $request->division_id);
-        }
-        if($request->district_id){
-            $query->where('news.district_id', $request->district_id);
-        }
-        if($request->upazila_id){
-            $query->where('news.upazila_id', $request->upazila_id);
-        }
-        if($request->union_id){
-            $query->where('news.union_id', $request->union_id);
-        }
-
-        $all_news = $query->select('news.*')->paginate(16);
-
-        $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-
-        $countries_id = News::where('country_id', '!=', NULL)->groupBy('country_id')->pluck('country_id');
-
-        return view('frontend.location-wise-news', compact('default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'categories', 'countries_id'));
     }
 }
