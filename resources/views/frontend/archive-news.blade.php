@@ -3,72 +3,148 @@
 @section('title', 'All News')
 
 @section('content')
-<!-- News With Sidebar Start -->
-<div class="container-fluid mt-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section-title">
-                            <h4 class="m-0 text-uppercase font-weight-bold">
-                                Date: {{ isset($archive_date) ? date('D d-F,Y', strtotime($archive_date)) : date('D d-F,Y') }}
-                            </h4>
-                        </div>
-                    </div>
 
-                    @php
-                    $all_news = [
-                        [
-                            "title" => "China sebut dukung upaya mediasi Pakistan ke AS dan Iran",
-                            "link" => "https://www.antaranews.com/berita/5502262/china-sebut-dukung-upaya-mediasi-pakistan-ke-as-dan-iran",
-                            "image" => "https://img.antaranews.com/cache/800x533/2026/03/31/IMG_3561.jpg",
-                            "description" => "Pemerintah China menyatakan mendukung upaya mediasi yang dilakukan oleh Pakistan bersama dengan Arab Sudi, Turki dan",
-                            "date" => "2026-03-31"
-                        ],
-                        [
-                            "title" => "KPK fokus awasi tiga sektor rawan korupsi di Jawa Tengah",
-                            "link" => "https://www.antaranews.com/berita/5502258/kpk-fokus-awasi-tiga-sektor-rawan-korupsi-di-jawa-tengah",
-                            "image" => "https://img.antaranews.com/cache/800x533/2026/03/30/dialog-antikorupsi-kpk-dengan-pemprov-jateng-2763542.jpg",
-                            "description" => "Komisi Pemberantasan Korupsi (KPK) saat ini berfokus mengawasi tiga sektor rawan korupsi pada lingkungan pemerintah",
-                            "date" => "2026-03-31"
-                        ]
-                    ];
-                    @endphp
+<div class="container mt-5">
 
-                    @forelse ($all_news as $news)
-                    <div class="col-lg-6">
-                        <div class="position-relative mb-3">
-                            <img class="img-fluid w-100" src="{{ $news['image'] }}" style="object-fit: cover;">
-                            
-                            <div class="bg-white border border-top-0 p-4">
-                                <div class="mb-2">
-                                    <span class="badge badge-warning p-2 mr-2">TODAY</span>
-                                    <small>{{ date('d-M, Y', strtotime($news['date'])) }}</small>
-                                </div>
+    @php
+    $hero = $all_news->first();
+    $latest = $all_news->slice(1, 4);
+    $others = $all_news->slice(5);
+    @endphp
 
-                                <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold"
-                                   href="{{ $news['link'] }}" target="_blank">
-                                   {{ $news['title'] }}
-                                </a>
+    {{-- 🔥 HERO + SIDEBAR --}}
+    <div class="row">
 
-                                <p>{{ $news['description'] }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    @empty
-                    <div class="col-lg-12">
-                        <div class="alert alert-danger">
-                            <span>{{ __('messages.not_found') }}</span>
-                        </div>
-                    </div>
-                    @endforelse
+        {{-- HERO --}}
+        <div class="col-lg-8">
+            @if($hero)
+            <div class="card border-0">
+                <img src="{{ $hero['image'] ?? 'https://via.placeholder.com/800x400' }}"
+                    class="card-img-top"
+                    style="height:420px; object-fit:cover;">
+
+                <div class="card-img-overlay d-flex flex-column justify-content-end"
+                    style="background:linear-gradient(transparent,rgba(0,0,0,.7));">
+
+                    <h3 class="text-white font-weight-bold">
+                        <a class="text-white" href="{{ $hero['link'] }}" target="_blank">
+                            {{ $hero['title'] }}
+                        </a>
+                    </h3>
+
+                    <small class="text-white">
+                        {{ $hero['date'] }}
+                    </small>
 
                 </div>
             </div>
-
+            @endif
         </div>
+
+        {{-- SIDEBAR --}}
+        <div class="col-lg-4">
+            <h5 class="font-weight-bold mb-3">Latest post</h5>
+
+            @foreach($latest as $news)
+            <div class="d-flex mb-3">
+
+                <img src="{{ $news['image'] ?? 'https://via.placeholder.com/90x70' }}"
+                    width="90"
+                    height="70"
+                    style="object-fit:cover"
+                    class="rounded">
+
+                <div class="pl-3">
+                    <h6 class="mb-1">
+                        <a href="{{ $news['link'] }}" class="text-dark" target="_blank">
+                            {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
+                        </a>
+                    </h6>
+
+                    <small class="text-muted">
+                        {{ $news['date'] }}
+                    </small>
+                </div>
+
+            </div>
+            @endforeach
+        </div>
+
     </div>
+
+    {{-- 🧱 GRID NEWS --}}
+    <div class="row mt-5">
+        @foreach($others as $news)
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm mb-4">
+
+                <img src="{{ $news['image'] ?? 'https://via.placeholder.com/350x200' }}"
+                    class="card-img-top"
+                    style="height:200px; object-fit:cover;">
+
+                <div class="card-body">
+
+                    <h5 class="font-weight-bold">
+                        <a href="{{ $news['link'] }}" class="text-dark" target="_blank">
+                            {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
+                        </a>
+                    </h5>
+
+                    <p class="text-muted">
+                        {{ \Illuminate\Support\Str::limit($news['description'], 100) }}
+                    </p>
+
+                    <small class="text-muted">
+                        {{ $news['date'] }}
+                    </small>
+
+                    {{-- 🔊 TTS --}}
+                    <div class="mt-3">
+                        <button
+                            onclick="playTTS(`{{ addslashes($news['title'] . '. ' . $news['description']) }}`)"
+                            class="btn btn-sm btn-success">
+                            🔊 Dengarkan
+                        </button>
+
+                        <button onclick="stopTTS()" class="btn btn-sm btn-danger">
+                            ⛔ Stop
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
 </div>
-<!-- News With Sidebar End -->
+
 @endsection
+
+<script>
+    function playTTS(text) {
+        const speech = new SpeechSynthesisUtterance(text);
+
+        speech.lang = "id-ID"; // bahasa Indonesia
+        speech.rate = 1; // kecepatan
+        speech.pitch = 1;
+
+        // ambil voice Indonesia kalau ada
+        const voices = speechSynthesis.getVoices();
+        const indoVoice = voices.find(v => v.lang === "id-ID");
+
+        if (indoVoice) {
+            speech.voice = indoVoice;
+        }
+
+        // stop suara sebelumnya
+        window.speechSynthesis.cancel();
+
+        // mulai bicara
+        window.speechSynthesis.speak(speech);
+    }
+
+    function stopTTS() {
+        window.speechSynthesis.cancel();
+    }
+</script>
