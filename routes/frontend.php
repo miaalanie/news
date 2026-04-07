@@ -84,6 +84,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/politik-news', [FrontendController::class, 'politikNews'])->name('politik.news');
     Route::get('/tekno-news', [FrontendController::class, 'teknoNews'])->name('tekno.news');
     Route::get('/hiburan-news', [FrontendController::class, 'hiburanNews'])->name('hiburan.news');
+    Route::get('/detail/{slug}', [FrontendController::class, 'detail'])->name('detail');
 
     Route::post('/subscriber-store', [FrontendController::class, 'subscriberStore'])->name('subscriber.store');
 

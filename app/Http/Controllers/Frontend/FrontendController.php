@@ -37,6 +37,7 @@ use Artesaos\SEOTools\Facades\JsonLd;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class FrontendController extends Controller
 {
@@ -78,6 +79,27 @@ class FrontendController extends Controller
                 'all_news' => []
             ]);
         }
+    }
+
+    private function formatNews($data)
+    {
+        return collect($data)->map(function ($item) {
+
+            $image = isset($item['image'])
+                ? str_replace('Image preview', '', $item['image'])
+                : null;
+
+            $title = $item['title'] ?? '';
+
+            return [
+                'title' => $title,
+                'slug' => Str::slug($title), // 🔥 cukup di sini doang!
+                'link' => $item['link'] ?? '',
+                'date' => date('d-M, Y', strtotime($item['isoDate'] ?? now())),
+                'image' => $image,
+                'description' => $item['description'] ?? '',
+            ];
+        });
     }
 
     public function changeLanguage(Request $request)
@@ -158,21 +180,10 @@ class FrontendController extends Controller
             $result = $response->json();
 
             // ambil data array langsung
-            $all_news = collect($result['data'])->map(function ($item) {
+            $all_news = $this->formatNews($result['data']);
+            session(['all_news' => $all_news]); // penting buat detail
 
-                // bersihin image (hapus "Image preview")
-                $image = isset($item['image'])
-                    ? str_replace('Image preview', '', $item['image'])
-                    : null;
-
-                return [
-                    'title' => $item['title'] ?? '',
-                    'link' => $item['link'] ?? '',
-                    'date' => date('d-M, Y', strtotime($item['isoDate'] ?? now())),
-                    'image' => $image,
-                    'description' => $item['description'] ?? '',
-                ];
-            });
+            return view('frontend.archive-news', compact('all_news'));
 
             return view('frontend.archive-news', compact('all_news'));
         } catch (\Exception $e) {
@@ -182,8 +193,37 @@ class FrontendController extends Controller
         }
     }
 
+    public function detail($slug)
+    {
+        try {
+            $all_news = session('all_news', collect());
+            $news = $all_news->firstWhere('slug', $slug);
+
+            if (!$news) {
+                abort(404);
+            }
+
+            $html = Http::get($news['link'])->body();
+
+            // 🔥 ambil div content
+            preg_match('/<div class="wrap__article-detail-content.*?>(.*?)<\/div>/s', $html, $matches);
+
+            $content = $matches[1] ?? '<p>Konten tidak ditemukan</p>';
+
+            // 🔥 bersihin
+            $content = preg_replace('#<script.*?</script>#is', '', $content);
+            $content = preg_replace('#<ins.*?</ins>#is', '', $content);
+
+            return view('frontend.detail-news', compact('news', 'content'));
+        } catch (\Exception $e) {
+            return view('frontend.detail-news', [
+                'news' => null,
+                'content' => '<p>Error ambil konten</p>'
+            ]);
+        }
+    }
     public function politikNews()
-     {
+    {
         try {
             $url = "https://berita-indo-api-next.vercel.app/api/antara-news/politik";
 
@@ -198,21 +238,10 @@ class FrontendController extends Controller
             $result = $response->json();
 
             // ambil data array langsung
-            $all_news = collect($result['data'])->map(function ($item) {
+            $all_news = $this->formatNews($result['data']);
+            session(['all_news' => $all_news]);
 
-                // bersihin image (hapus "Image preview")
-                $image = isset($item['image'])
-                    ? str_replace('Image preview', '', $item['image'])
-                    : null;
-
-                return [
-                    'title' => $item['title'] ?? '',
-                    'link' => $item['link'] ?? '',
-                    'date' => date('d-M, Y', strtotime($item['isoDate'] ?? now())),
-                    'image' => $image,
-                    'description' => $item['description'] ?? '',
-                ];
-            });
+            return view('frontend.archive-news', compact('all_news'));
 
             return view('frontend.archive-news', compact('all_news'));
         } catch (\Exception $e) {
@@ -222,7 +251,7 @@ class FrontendController extends Controller
         }
     }
     public function teknoNews()
-     {
+    {
         try {
             $url = "https://berita-indo-api-next.vercel.app/api/antara-news/tekno";
 
@@ -237,21 +266,10 @@ class FrontendController extends Controller
             $result = $response->json();
 
             // ambil data array langsung
-            $all_news = collect($result['data'])->map(function ($item) {
+            $all_news = $this->formatNews($result['data']);
+            session(['all_news' => $all_news]);
 
-                // bersihin image (hapus "Image preview")
-                $image = isset($item['image'])
-                    ? str_replace('Image preview', '', $item['image'])
-                    : null;
-
-                return [
-                    'title' => $item['title'] ?? '',
-                    'link' => $item['link'] ?? '',
-                    'date' => date('d-M, Y', strtotime($item['isoDate'] ?? now())),
-                    'image' => $image,
-                    'description' => $item['description'] ?? '',
-                ];
-            });
+            return view('frontend.archive-news', compact('all_news'));
 
             return view('frontend.archive-news', compact('all_news'));
         } catch (\Exception $e) {
@@ -260,9 +278,8 @@ class FrontendController extends Controller
             ]);
         }
     }
-
     public function hiburanNews()
-     {
+    {
         try {
             $url = "https://berita-indo-api-next.vercel.app/api/antara-news/hiburan";
 
@@ -277,21 +294,10 @@ class FrontendController extends Controller
             $result = $response->json();
 
             // ambil data array langsung
-            $all_news = collect($result['data'])->map(function ($item) {
+            $all_news = $this->formatNews($result['data']);
+            session(['all_news' => $all_news]);
 
-                // bersihin image (hapus "Image preview")
-                $image = isset($item['image'])
-                    ? str_replace('Image preview', '', $item['image'])
-                    : null;
-
-                return [
-                    'title' => $item['title'] ?? '',
-                    'link' => $item['link'] ?? '',
-                    'date' => date('d-M, Y', strtotime($item['isoDate'] ?? now())),
-                    'image' => $image,
-                    'description' => $item['description'] ?? '',
-                ];
-            });
+            return view('frontend.archive-news', compact('all_news'));
 
             return view('frontend.archive-news', compact('all_news'));
         } catch (\Exception $e) {

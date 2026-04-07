@@ -56,7 +56,7 @@
 
                 <div class="pl-3">
                     <h6 class="mb-1">
-                        <a href="{{ $news['link'] }}" class="text-dark" target="_blank">
+                        <a href="{{ route('detail', $news['slug']) }}" class="text-dark">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h6>
@@ -85,7 +85,7 @@
                 <div class="card-body">
 
                     <h5 class="font-weight-bold">
-                        <a href="{{ $news['link'] }}" class="text-dark" target="_blank">
+                        <a href="{{ route('detail', $news['slug']) }}" class="text-dark">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h5>
