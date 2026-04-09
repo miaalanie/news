@@ -27,7 +27,11 @@
                     style="background:linear-gradient(transparent,rgba(0,0,0,.7));">
 
                     <h3 class="text-white font-weight-bold">
-                        <a class="text-white tts-title" href="{{ $hero['link'] }}" target="_blank">
+                        <a class="text-white tts-title"
+                           href="{{ $hero['link'] }}"
+                           target="_blank"
+                           onmouseenter="playTTS(`{{ addslashes($hero['title']) }}`)"
+                           onmouseleave="stopTTS()">
                             {{ $hero['title'] }}
                         </a>
                     </h3>
@@ -56,7 +60,11 @@
 
                 <div class="pl-3">
                     <h6 class="mb-1">
-                       <a href="{{ route('detail', $news['slug'] ?? $news->news_slug ?? '#') }}" class="text-dark tts-title">
+                        <a href="{{ $news['link'] }}"
+                           class="text-dark tts-title"
+                           target="_blank"
+                           onmouseenter="playTTS(`{{ addslashes($news['title']) }}`)"
+                           onmouseleave="stopTTS()">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h6>
@@ -85,7 +93,11 @@
                 <div class="card-body">
 
                     <h5 class="font-weight-bold">
-                        <a href="{{ route('detail', $news['slug'] ?? $news->news_slug ?? '#') }}" class="text-dark">
+                        <a href="{{ $news['link'] }}"
+                           class="text-dark tts-title"
+                           target="_blank"
+                           onmouseenter="playTTS(`{{ addslashes($news['title'] . '. ' . $news['description']) }}`)"
+                           onmouseleave="stopTTS()">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h5>
@@ -98,19 +110,6 @@
                         {{ $news['date'] }}
                     </small>
 
-                    {{-- 🔊 TTS --}}
-                    <div class="mt-3">
-                        <button
-                            onclick="playTTS(`{{ addslashes($news['title'] . '. ' . $news['description']) }}`)"
-                            class="btn btn-sm btn-success">
-                            🔊 Dengarkan
-                        </button>
-
-                        <button onclick="stopTTS()" class="btn btn-sm btn-danger">
-                            ⛔ Stop
-                        </button>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -121,30 +120,34 @@
 
 @endsection
 
-<script>
-    function playTTS(text) {
-        const speech = new SpeechSynthesisUtterance(text);
 
-        speech.lang = "id-ID"; // bahasa Indonesia
-        speech.rate = 1; // kecepatan
+<script>
+let ttsTimeout;
+
+function playTTS(text) {
+    clearTimeout(ttsTimeout);
+
+    ttsTimeout = setTimeout(() => {
+        window.speechSynthesis.cancel();
+
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = "id-ID";
+        speech.rate = 1;
         speech.pitch = 1;
 
-        // ambil voice Indonesia kalau ada
         const voices = speechSynthesis.getVoices();
-        const indoVoice = voices.find(v => v.lang === "id-ID");
+        const indo = voices.find(v => v.lang.includes("id"));
 
-        if (indoVoice) {
-            speech.voice = indoVoice;
+        if (indo) {
+            speech.voice = indo;
         }
 
-        // stop suara sebelumnya
-        window.speechSynthesis.cancel();
-
-        // mulai bicara
         window.speechSynthesis.speak(speech);
-    }
+    }, 300); // delay biar gak terlalu sensitif
+}
 
-    function stopTTS() {
-        window.speechSynthesis.cancel();
-    }
+function stopTTS() {
+    clearTimeout(ttsTimeout);
+    window.speechSynthesis.cancel();
+}
 </script>

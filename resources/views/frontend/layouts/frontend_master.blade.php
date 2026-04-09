@@ -114,13 +114,6 @@ App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\
     <!-- Content End -->
 
     <!-- Footer Start -->
-<<<<<<< Updated upstream
-    <div class="container-fluid bg-dark text-light pt-5 px-sm-3 px-md-5 mt-5">
-        <div class="row py-4">
-            <div class="col-lg-4 col-md-6 mb-4">
-                <h5 class="mb-4 text-uppercase font-weight-bold">
-                    {{ __('messages.contact_us') }}
-=======
     <div class="container-fluid text-light pt-5 px-sm-3 px-md-5 mt-5"
         style="background: linear-gradient(135deg, #1c1c1c, #111111);">
 
@@ -131,7 +124,6 @@ App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\
                 <h5 style="font-weight:700; margin-bottom:20px;color:#ffffff;">
                     CONTACT US
                     <span style="display:block;width:40px;height:2px;background:#ffc107;margin-top:8px;"></span>
->>>>>>> Stashed changes
                 </h5>
 
                 <p style="color:#ccc;">
@@ -148,8 +140,6 @@ App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\
                     <i class="fa fa-envelope mr-2"></i>
                     diskominfo@sukabumikota.go.id
                 </p>
-<<<<<<< Updated upstream
-=======
             </div>
 
             <!-- KANAN: Sosial -->
@@ -189,12 +179,9 @@ App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\
                 <p style="color:#aaa; font-size:14px;">
                     Ikuti kami untuk mendapatkan update berita terbaru seputar Kota Sukabumi.
                 </p>
->>>>>>> Stashed changes
             </div>
         </div>
     </div>
-<<<<<<< Updated upstream
-=======
 
     <!-- Copyright -->
     <div class="container-fluid py-3 text-center"
@@ -209,7 +196,6 @@ App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\
 
     <!-- Back to Top -->
     <a href="javascript:void(0);" class="btn btn-primary btn-square back-to-top"><i class="fa fa-arrow-up"></i></a>
->>>>>>> Stashed changes
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

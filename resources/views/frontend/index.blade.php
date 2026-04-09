@@ -30,7 +30,8 @@
                         <a class="text-white tts-title"
                            href="{{ $hero['link'] }}"
                            target="_blank"
-                           onmouseenter="playTTS(`{{ addslashes($hero['title']) }}`)">
+                           onmouseenter="playTTS(`{{ addslashes($hero['title']) }}`)"
+                           onmouseleave="stopTTS()">
                             {{ $hero['title'] }}
                         </a>
                     </h3>
@@ -62,7 +63,8 @@
                         <a href="{{ $news['link'] }}"
                            class="text-dark tts-title"
                            target="_blank"
-                           onmouseenter="playTTS(`{{ addslashes($news['title']) }}`)">
+                           onmouseenter="playTTS(`{{ addslashes($news['title']) }}`)"
+                           onmouseleave="stopTTS()">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h6>
@@ -94,7 +96,8 @@
                         <a href="{{ $news['link'] }}"
                            class="text-dark tts-title"
                            target="_blank"
-                           onmouseenter="playTTS(`{{ addslashes($news['title']) }}`)">
+                           onmouseenter="playTTS(`{{ addslashes($news['title'] . '. ' . $news['description']) }}`)"
+                           onmouseleave="stopTTS()">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h5>
@@ -106,19 +109,6 @@
                     <small class="text-muted">
                         {{ $news['date'] }}
                     </small>
-
-                    {{-- 🔊 TTS --}}
-                    <div class="mt-3">
-                        <button
-                            onclick="playTTS(`{{ addslashes($news['title'] . '. ' . $news['description']) }}`)"
-                            class="btn btn-sm btn-success">
-                            🔊 Dengarkan
-                        </button>
-
-                        <button onclick="stopTTS()" class="btn btn-sm btn-danger">
-                            ⛔ Stop
-                        </button>
-                    </div>
 
                 </div>
             </div>
@@ -132,32 +122,32 @@
 
 
 <script>
-let currentSpeech = null;
+let ttsTimeout;
 
 function playTTS(text) {
+    clearTimeout(ttsTimeout);
 
-    window.speechSynthesis.cancel();
+    ttsTimeout = setTimeout(() => {
+        window.speechSynthesis.cancel();
 
-    currentSpeech = new SpeechSynthesisUtterance(text);
-    currentSpeech.lang = "id-ID";
-    currentSpeech.rate = 1;
-    currentSpeech.pitch = 1;
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = "id-ID";
+        speech.rate = 1;
+        speech.pitch = 1;
 
-    const voices = speechSynthesis.getVoices();
-    const indo = voices.find(v => v.lang.includes("id"));
+        const voices = speechSynthesis.getVoices();
+        const indo = voices.find(v => v.lang.includes("id"));
 
-    if (indo) {
-        currentSpeech.voice = indo;
-    }
+        if (indo) {
+            speech.voice = indo;
+        }
 
-    speechSynthesis.speak(currentSpeech);
+        window.speechSynthesis.speak(speech);
+    }, 300); // delay biar gak terlalu sensitif
 }
 
 function stopTTS() {
-    speechSynthesis.cancel();
+    clearTimeout(ttsTimeout);
+    window.speechSynthesis.cancel();
 }
-
-window.speechSynthesis.onvoiceschanged = function() {
-    speechSynthesis.getVoices();
-};
 </script>
