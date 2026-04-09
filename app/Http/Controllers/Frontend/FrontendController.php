@@ -3,15 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\AboutUs;
-use App\Models\Advertisement;
-use App\Models\Category;
-use App\Models\DefaultSetting;
-use App\Models\News;
-use App\Models\NewsTranslation;
-use App\Models\PageSettingTranslation;
-use App\Models\Tag;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -62,36 +53,6 @@ class FrontendController extends Controller
                 'all_news' => []
             ]);
         }
-    }
-
-
-
-
-    public function page($slug)
-    {
-        $page = PageSettingTranslation::where('page_slug', $slug)->first();
-        $default_setting = DefaultSetting::first();
-        return view('frontend.page', compact('page', 'default_setting'));
-    }
-
-    public function searchNews(Request $request)
-    {
-        $search_data = $request->news_headline;
-
-        $all_news = News::orderBy('id', 'desc')->paginate(20);
-
-        if ($search_data) {
-            $result_news = NewsTranslation::where('news_headline', 'LIKE', '%' . $search_data . '%')
-                ->leftJoin('news', 'news_translations.news_id', 'news.id');
-            $all_news = $result_news->select('news_translations.*', 'news.news_category_id', 'news.news_thumbnail_photo', 'news.created_at')->orderBy('id', 'desc')->paginate(20);
-        }
-
-        $default_setting = DefaultSetting::first();
-        $tags = Tag::where('status', 'Active')->get();
-        $tranding_news = News::where('status', 'Active')->orderBy('news_view', 'desc')->get();
-        $advertisements = Advertisement::where('status', 'Active')->get();
-        $categories = Category::where('status', 'Active')->get();
-        return view('frontend.search-news', compact('search_data', 'default_setting', 'tags', 'all_news', 'tranding_news', 'advertisements', 'categories'));
     }
 
     public function todayNews()
@@ -234,19 +195,6 @@ class FrontendController extends Controller
         }
     }
 
-
-    public function aboutUs()
-    {
-        $default_setting = DefaultSetting::first();
-        $about_us = AboutUs::first();
-        return view('frontend.about', compact('default_setting', 'about_us'));
-    }
-
-    public function contactUs()
-    {
-        $default_setting = DefaultSetting::first();
-        return view('frontend.contact', compact('default_setting'));
-    }
 
 
 }
