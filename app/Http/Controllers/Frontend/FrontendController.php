@@ -41,45 +41,6 @@ use Illuminate\Support\Str;
 
 class FrontendController extends Controller
 {
-    public function index()
-    {
-        try {
-            $url = "https://berita-indo-api-next.vercel.app/api/antara-news/top-news";
-
-            $response = Http::get($url);
-
-            if ($response->failed()) {
-                return view('frontend.archive-news', [
-                    'all_news' => []
-                ]);
-            }
-
-            $result = $response->json();
-
-            // ambil data array langsung
-            $all_news = collect($result['data'])->map(function ($item) {
-
-                // bersihin image (hapus "Image preview")
-                $image = isset($item['image'])
-                    ? str_replace('Image preview', '', $item['image'])
-                    : null;
-
-                return [
-                    'title' => $item['title'] ?? '',
-                    'link' => $item['link'] ?? '',
-                    'date' => date('d-M, Y', strtotime($item['isoDate'] ?? now())),
-                    'image' => $image,
-                    'description' => $item['description'] ?? '',
-                ];
-            });
-
-            return view('frontend.archive-news', compact('all_news'));
-        } catch (\Exception $e) {
-            return view('frontend.archive-news', [
-                'all_news' => []
-            ]);
-        }
-    }
 
     private function formatNews($data)
     {
@@ -101,6 +62,33 @@ class FrontendController extends Controller
             ];
         });
     }
+    public function index()
+    {
+        try {
+            $url = "https://berita-indo-api-next.vercel.app/api/antara-news/top-news";
+
+            $response = Http::get($url);
+
+            if ($response->failed()) {
+                return view('frontend.archive-news', [
+                    'all_news' => []
+                ]);
+            }
+
+            $result = $response->json();
+
+            // ambil data array langsung
+            $all_news = $this->formatNews($result['data']);
+            session(['all_news' => $all_news]); // penting buat detail
+            return view('frontend.archive-news', compact('all_news'));
+        } catch (\Exception $e) {
+            return view('frontend.archive-news', [
+                'all_news' => []
+            ]);
+        }
+    }
+
+
 
     public function changeLanguage(Request $request)
     {
@@ -214,7 +202,7 @@ class FrontendController extends Controller
             $content = preg_replace('#<ins.*?</ins>#is', '', $content);
             $content = preg_replace('#class=".*?"#is', '', $content);
             $content = preg_replace('#style=".*?"#is', '', $content);
-             
+
             return view('frontend.detail-news', compact('news', 'content'));
         } catch (\Exception $e) {
             return view('frontend.detail-news', [

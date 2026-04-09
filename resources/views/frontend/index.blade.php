@@ -28,7 +28,7 @@
 
                     <h3 class="text-white font-weight-bold">
                         <a class="text-white tts-title"
-                           href="{{ $hero['link'] }}"
+                           href="{{ route('detail', $hero['slug'] ?? '#') }}"
                            target="_blank"
                            onmouseenter="playTTS(`{{ addslashes($hero['title']) }}`)"
                            onmouseleave="stopTTS()">
@@ -60,7 +60,7 @@
 
                 <div class="pl-3">
                     <h6 class="mb-1">
-                        <a href="{{ $news['link'] }}"
+                        <a href="{{ route('detail', $news['slug'] ?? $news->news_slug ?? '#') }}"
                            class="text-dark tts-title"
                            target="_blank"
                            onmouseenter="playTTS(`{{ addslashes($news['title']) }}`)"
@@ -93,7 +93,7 @@
                 <div class="card-body">
 
                     <h5 class="font-weight-bold">
-                        <a href="{{ $news['link'] }}"
+                        <a href="{{ route('detail', $news['slug'] ?? $news->news_slug ?? '#') }}"
                            class="text-dark tts-title"
                            target="_blank"
                            onmouseenter="playTTS(`{{ addslashes($news['title'] . '. ' . $news['description']) }}`)"
