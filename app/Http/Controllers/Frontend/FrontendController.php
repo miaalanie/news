@@ -184,8 +184,6 @@ class FrontendController extends Controller
             session(['all_news' => $all_news]); // penting buat detail
 
             return view('frontend.archive-news', compact('all_news'));
-
-            return view('frontend.archive-news', compact('all_news'));
         } catch (\Exception $e) {
             return view('frontend.archive-news', [
                 'all_news' => []
@@ -242,11 +240,11 @@ class FrontendController extends Controller
             session(['all_news' => $all_news]);
 
             return view('frontend.archive-news', compact('all_news'));
-
-            return view('frontend.archive-news', compact('all_news'));
         } catch (\Exception $e) {
-            return view('frontend.archive-news', [
-                'all_news' => []
+            dd([
+                'message' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile()
             ]);
         }
     }
@@ -268,8 +266,6 @@ class FrontendController extends Controller
             // ambil data array langsung
             $all_news = $this->formatNews($result['data']);
             session(['all_news' => $all_news]);
-
-            return view('frontend.archive-news', compact('all_news'));
 
             return view('frontend.archive-news', compact('all_news'));
         } catch (\Exception $e) {
@@ -296,8 +292,6 @@ class FrontendController extends Controller
             // ambil data array langsung
             $all_news = $this->formatNews($result['data']);
             session(['all_news' => $all_news]);
-
-            return view('frontend.archive-news', compact('all_news'));
 
             return view('frontend.archive-news', compact('all_news'));
         } catch (\Exception $e) {

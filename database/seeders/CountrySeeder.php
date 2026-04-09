@@ -34,7 +34,7 @@ class CountrySeeder extends Seeder
             ['country_name' => 'Azerbaijan', 'country_code' => 'AZ'],
             ['country_name' => 'Bahamas', 'country_code' => 'BS'],
             ['country_name' => 'Bahrain', 'country_code' => 'BH'],
-            ['country_name' => 'Bangladesh', 'country_code' => 'BD'],
+            ['country_name' => '', 'country_code' => 'BD'],
             ['country_name' => 'Barbados', 'country_code' => 'BB'],
             ['country_name' => 'Belarus', 'country_code' => 'BY'],
             ['country_name' => 'Belgium', 'country_code' => 'BE'],

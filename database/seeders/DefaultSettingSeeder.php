@@ -18,15 +18,15 @@ class DefaultSettingSeeder extends Seeder
         DefaultSetting::create([
             'en' => [
                 'app_name' => 'Spy News',
-                'support_phone' => '01878136530',
-                'support_email' => 'info@email.com',
-                'address' => 'Dhaka, Bangladesh',
+                'support_phone' => '+62 (266) 20229715',
+                'support_email' => 'diskominfo@sukabumikota.go.id',
+                'address' => 'Jl. Syamsudin. SH No.25, Cikole, Kec. Cikole, Kota Sukabumi, Jawa Barat 43113',
             ],
             'bn' => [
-                'app_name' => 'স্পাই নিউজ',
-                'support_phone' => '01878136530',
-                'support_email' => 'info@email.com',
-                'address' => 'ঢাকা, বাংলাদেশ',
+                'app_name' => 'Spy News',
+                'support_phone' => '+62 (266) 20229715',
+                'support_email' => 'diskominfo@sukabumikota.go.id',
+                'address' => 'Jl. Syamsudin. SH No.25, Cikole, Kec. Cikole, Kota Sukabumi, Jawa Barat 43113',
             ],
             'app_url' => 'http://127.0.0.1:8000',
             'time_zone' => 'UTC',

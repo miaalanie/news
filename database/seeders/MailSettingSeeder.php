@@ -22,7 +22,7 @@ class MailSettingSeeder extends Seeder
             'username' => 'username',
             'password' => 'password',
             'encryption' => 'tls',
-            'from_address' => 'info@gmail.com',
+            'from_address' => 'diskominfo@sukabumikota.go.id',
             'created_by' => 1,
         ]);
     }
