@@ -27,7 +27,10 @@
                     style="background:linear-gradient(transparent,rgba(0,0,0,.7));">
 
                     <h3 class="text-white font-weight-bold">
-                        <a class="text-white" href="{{ $hero['link'] }}" target="_blank">
+                        <a class="text-white tts-title"
+                           href="{{ $hero['link'] }}"
+                           target="_blank"
+                           onmouseenter="playTTS(`{{ addslashes($hero['title']) }}`)">
                             {{ $hero['title'] }}
                         </a>
                     </h3>
@@ -56,7 +59,10 @@
 
                 <div class="pl-3">
                     <h6 class="mb-1">
-                        <a href="{{ $news['link'] }}" class="text-dark" target="_blank">
+                        <a href="{{ $news['link'] }}"
+                           class="text-dark tts-title"
+                           target="_blank"
+                           onmouseenter="playTTS(`{{ addslashes($news['title']) }}`)">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h6>
@@ -85,7 +91,10 @@
                 <div class="card-body">
 
                     <h5 class="font-weight-bold">
-                        <a href="{{ $news['link'] }}" class="text-dark" target="_blank">
+                        <a href="{{ $news['link'] }}"
+                           class="text-dark tts-title"
+                           target="_blank"
+                           onmouseenter="playTTS(`{{ addslashes($news['title']) }}`)">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h5>
@@ -121,30 +130,34 @@
 
 @endsection
 
+
 <script>
-    function playTTS(text) {
-        const speech = new SpeechSynthesisUtterance(text);
+let currentSpeech = null;
 
-        speech.lang = "id-ID"; // bahasa Indonesia
-        speech.rate = 1; // kecepatan
-        speech.pitch = 1;
+function playTTS(text) {
 
-        // ambil voice Indonesia kalau ada
-        const voices = speechSynthesis.getVoices();
-        const indoVoice = voices.find(v => v.lang === "id-ID");
+    window.speechSynthesis.cancel();
 
-        if (indoVoice) {
-            speech.voice = indoVoice;
-        }
+    currentSpeech = new SpeechSynthesisUtterance(text);
+    currentSpeech.lang = "id-ID";
+    currentSpeech.rate = 1;
+    currentSpeech.pitch = 1;
 
-        // stop suara sebelumnya
-        window.speechSynthesis.cancel();
+    const voices = speechSynthesis.getVoices();
+    const indo = voices.find(v => v.lang.includes("id"));
 
-        // mulai bicara
-        window.speechSynthesis.speak(speech);
+    if (indo) {
+        currentSpeech.voice = indo;
     }
 
-    function stopTTS() {
-        window.speechSynthesis.cancel();
-    }
+    speechSynthesis.speak(currentSpeech);
+}
+
+function stopTTS() {
+    speechSynthesis.cancel();
+}
+
+window.speechSynthesis.onvoiceschanged = function() {
+    speechSynthesis.getVoices();
+};
 </script>

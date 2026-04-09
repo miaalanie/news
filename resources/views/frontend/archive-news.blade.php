@@ -27,7 +27,7 @@
                     style="background:linear-gradient(transparent,rgba(0,0,0,.7));">
 
                     <h3 class="text-white font-weight-bold">
-                        <a class="text-white" href="{{ $hero['link'] }}" target="_blank">
+                        <a class="text-white tts-title" href="{{ $hero['link'] }}" target="_blank">
                             {{ $hero['title'] }}
                         </a>
                     </h3>
@@ -56,7 +56,7 @@
 
                 <div class="pl-3">
                     <h6 class="mb-1">
-                        <a href="{{ route('detail', $news['slug'] ?? $news->news_slug ?? '#') }}" class="text-dark">
+                       <a href="{{ route('detail', $news['slug'] ?? $news->news_slug ?? '#') }}" class="text-dark tts-title">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h6>
