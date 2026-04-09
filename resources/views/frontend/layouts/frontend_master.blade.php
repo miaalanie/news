@@ -114,30 +114,102 @@ App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\
     <!-- Content End -->
 
     <!-- Footer Start -->
+<<<<<<< Updated upstream
     <div class="container-fluid bg-dark text-light pt-5 px-sm-3 px-md-5 mt-5">
         <div class="row py-4">
             <div class="col-lg-4 col-md-6 mb-4">
                 <h5 class="mb-4 text-uppercase font-weight-bold">
                     {{ __('messages.contact_us') }}
+=======
+    <div class="container-fluid text-light pt-5 px-sm-3 px-md-5 mt-5"
+        style="background: linear-gradient(135deg, #1c1c1c, #111111);">
+
+        <div class="row py-4 align-items-start">
+
+            <!-- KIRI: Contact -->
+            <div class="col-lg-6 col-md-6 mb-4">
+                <h5 style="font-weight:700; margin-bottom:20px;color:#ffffff;">
+                    CONTACT US
+                    <span style="display:block;width:40px;height:2px;background:#ffc107;margin-top:8px;"></span>
+>>>>>>> Stashed changes
                 </h5>
 
-                <p class="mb-2 d-flex align-items-center">
-                    <i class="fa fa-map-marker-alt mr-3"></i>
-                    {{ $default_setting->address }}
+                <p style="color:#ccc;">
+                    <i class="fa fa-map-marker-alt mr-2"></i>
+                    Jl. Syamsudin. SH No.25, Cikole, Kota Sukabumi, Jawa Barat 43113
                 </p>
 
-                <p class="mb-2 d-flex align-items-center">
-                    <i class="fa fa-phone-alt mr-3"></i>
-                    {{ $default_setting->support_phone }}
+                <p style="color:#ccc;">
+                    <i class="fa fa-phone-alt mr-2"></i>
+                    +62 (266) 20229715
                 </p>
 
-                <p class="mb-3 d-flex align-items-center">
-                    <i class="fa fa-envelope mr-3"></i>
-                    {{ $default_setting->support_email }}
+                <p style="color:#ccc;">
+                    <i class="fa fa-envelope mr-2"></i>
+                    diskominfo@sukabumikota.go.id
                 </p>
+<<<<<<< Updated upstream
+=======
+            </div>
+
+            <!-- KANAN: Sosial -->
+            <div class="col-lg-6 col-md-6 mb-4" style="text-align:left;">
+                <h5 style="font-weight:700; margin-bottom:20px;color:#ffffff;">
+                    FOLLOW US
+                    <span style="display:block;width:40px;height:2px;background:#ffc107;margin-top:8px; margin-right:auto;"></span>
+                </h5>
+
+                <div style="display:flex; gap:8px; margin-bottom:15px; justify-content:flex-start;">
+                    <a target="_blank" href="https://www.facebook.com/diskominfokotsi"
+                        style="width:38px;height:38px;border:1px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+
+                    <a target="_blank" href="#"
+                        style="width:38px;height:38px;border:1px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+
+                    <a target="_blank" href="https://www.instagram.com/diskominfo_sukabumikota"
+                        style="width:38px;height:38px;border:1px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                    <a target="_blank" href="https://maps.app.goo.gl/tgLkh3X6p2hKuDaC7"
+                        style="width:38px;height:38px;border:1px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;">
+                        <i class="fas fa-map"></i>
+                    </a>
+
+                    <a target="_blank" href="http://www.youtube.com/@pemerintahkotasukabumi"
+                        style="width:38px;height:38px;border:1px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+
+                <p style="color:#aaa; font-size:14px;">
+                    Ikuti kami untuk mendapatkan update berita terbaru seputar Kota Sukabumi.
+                </p>
+>>>>>>> Stashed changes
             </div>
         </div>
     </div>
+<<<<<<< Updated upstream
+=======
+
+    <!-- Copyright -->
+    <div class="container-fluid py-3 text-center"
+        style="background:#111; color:#ccc;">
+        &copy; {{ __('messages.copyright') }}
+        <a href="https://diskominfo.sukabumikota.go.id/" target="_blank"
+            style="color:#ffc107; text-decoration:none;">
+            Diskominfo Kota Sukabumi
+        </a>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="javascript:void(0);" class="btn btn-primary btn-square back-to-top"><i class="fa fa-arrow-up"></i></a>
+>>>>>>> Stashed changes
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

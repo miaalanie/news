@@ -7,57 +7,49 @@
 <div class="container mt-5">
 
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-lg-9 col-xl-8">
 
             {{-- 🔥 TITLE --}}
-            <h2 class="font-weight-bold mb-3">
+            <h1 style="font-weight:700; font-size:32px; line-height:1.3; margin-bottom:10px;">
                 {{ $news['title'] }}
-            </h2>
+            </h1>
 
             {{-- 📅 DATE --}}
-            <small class="text-muted d-block mb-3">
+            <small style="color:#888; display:block; margin-bottom:20px;">
                 {{ $news['date'] }}
             </small>
 
             {{-- 🖼 IMAGE --}}
-            <div class="mb-4">
+            <div style="margin-bottom:25px;">
                 <img src="{{ $news['image'] ?? 'https://via.placeholder.com/800x400' }}"
-                    class="img-fluid rounded shadow-sm"
-                    style="width:100%; max-height:400px; object-fit:cover;">
+                    style="width:100%; max-height:420px; object-fit:cover; border-radius:10px;">
             </div>
 
             {{-- 🔊 TTS --}}
-            <div class="mt-3">
-                <button id="playBtn" onclick="playContentTTS()" class="btn btn-success btn-sm">
+            <div style="margin-bottom:25px; display:flex; gap:10px;">
+                <button id="playBtn" onclick="playContentTTS()"
+                    style="background:#28a745; color:white; border:none; padding:6px 14px; border-radius:5px; font-size:14px;">
                     🔊 Dengarkan
                 </button>
 
-                <button onclick="stopTTS()" class="btn btn-sm btn-danger">
+                <button onclick="stopTTS()"
+                    style="background:#dc3545; color:white; border:none; padding:6px 14px; border-radius:5px; font-size:14px;">
                     ⛔ Stop
                 </button>
             </div>
 
-            {{-- 📝 DESCRIPTION --}}
-            <p class="lead text-justify">
-                {{ $news['description'] }}
-            </p>
+            <hr style="margin:30px 0;">
 
             {{-- 🧱 CONTENT HASIL SCRAPING --}}
-            <div id="articleContent" class="article-content">
+            <div id="articleContent" style="font-size:16px; line-height:1.8; color:#444;">
                 {!! $content !!}
             </div>
 
             {{-- 🔗 SOURCE BUTTON --}}
-            <div class="mt-4">
-                <a href="{{ $news['link'] }}" target="_blank" class="btn btn-primary">
+            <div style="margin-top:40px;">
+                <a href="{{ $news['link'] }}" target="_blank"
+                    style="background:#ffc107; color:#000; padding:10px 20px; border-radius:6px; text-decoration:none; font-weight:500;">
                     🔗 Baca Sumber Asli
-                </a>
-            </div>
-
-            {{-- 🔙 BACK BUTTON --}}
-            <div class="mt-3">
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">
-                    ⬅ Kembali
                 </a>
             </div>
 
@@ -66,10 +58,10 @@
 
 </div>
 
-
 @endsection
 
 <script>
+    
     let voices = [];
 
     // pastikan voices ke-load

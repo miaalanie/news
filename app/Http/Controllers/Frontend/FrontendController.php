@@ -210,8 +210,11 @@ class FrontendController extends Controller
 
             // 🔥 bersihin
             $content = preg_replace('#<script.*?</script>#is', '', $content);
+            $content = preg_replace('#<style.*?</style>#is', '', $content);
             $content = preg_replace('#<ins.*?</ins>#is', '', $content);
-
+            $content = preg_replace('#class=".*?"#is', '', $content);
+            $content = preg_replace('#style=".*?"#is', '', $content);
+             
             return view('frontend.detail-news', compact('news', 'content'));
         } catch (\Exception $e) {
             return view('frontend.detail-news', [
