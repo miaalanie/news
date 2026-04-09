@@ -1,2 +1,0 @@
-<box-icon name='child'></box-icon>
-<i class='bx bx-child'></i>

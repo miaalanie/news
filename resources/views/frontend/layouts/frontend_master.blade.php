@@ -1,17 +1,3 @@
-@php
-$default_setting = App\Models\DefaultSetting::first();
-App\Models\Visitor_detail::insert([
-'ip_address' => $_SERVER['REMOTE_ADDR'],
-'visit_time' => Carbon\Carbon::now()
-])
-@endphp
-
-@auth
-@php
-App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\Carbon::now() ])
-@endphp
-@endauth
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,17 +5,11 @@ App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ $default_setting->app_name }} - @yield('title')</title>
-
     {!! SEOMeta::generate() !!}
     {!! OpenGraph::generate() !!}
     {!! Twitter::generate() !!}
     {!! JsonLd::generate() !!}
 
-    <!-- Favicon -->
-    <link href="{{ asset('uploads/default_photo') }}/{{ $default_setting->favicon }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -55,7 +35,7 @@ App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-2 py-lg-0 px-lg-5">
 
         <a href="{{ route('index') }}" class="navbar-brand spy-logo">
-            {{ $default_setting->app_name }}
+            NEWS</span>
         </a>
 
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -89,7 +69,7 @@ App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\
             </div>
 
             <!-- SEARCH -->
-            <div class="input-group ml-auto d-none d-lg-flex" style="max-width:300px;">
+            <!-- <div class="input-group ml-auto d-none d-lg-flex" style="max-width:300px;">
                 <form action="{{route('search.news')}}" method="GET" class="d-flex w-100">
 
                     <input type="text"
@@ -104,7 +84,7 @@ App\Models\User::where('id', Auth::user()->id)->update(['last_active' => Carbon\
                     </div>
 
                 </form>
-            </div>
+            </div> -->
 
         </div>
     </nav>
