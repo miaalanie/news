@@ -94,6 +94,9 @@
 
     {{-- 🧱 GRID NEWS --}}
     <div class="row mt-5">
+        <div class="col-12">
+            <h5 class="font-weight-bold mb-3">More News</h5>
+        </div>
         @foreach($others as $news)
         <div class="col-lg-4">
             <div class="card border-0 shadow-sm mb-4">
@@ -155,7 +158,7 @@
             }
 
             window.speechSynthesis.speak(speech);
-        }, 300); // delay biar gak terlalu sensitif
+        }, 300);
     }
 
     function stopTTS() {
