@@ -6,11 +6,23 @@
 
 <div class="container mt-5">
 
+    @if($all_news && count($all_news) > 0)
+
     @php
+    $all_news = collect($all_news);
     $hero = $all_news->first();
     $latest = $all_news->slice(1, 4);
     $others = $all_news->slice(5);
     @endphp
+
+    {{-- tampilkan data seperti biasa --}}
+
+    @else
+
+    {{-- tampilkan halaman kosong --}}
+    @include('errors.402')
+
+    @endif
 
     {{-- 🔥 HERO + SIDEBAR --}}
     <div class="row">
@@ -28,10 +40,10 @@
 
                     <h3 class="text-white font-weight-bold">
                         <a class="text-white tts-title"
-                           href="{{ route('detail', $hero['slug'] ?? '#') }}"
-                           target="_blank"
-                           onmouseenter="playTTS(`{{ addslashes($hero['title']) }}`)"
-                           onmouseleave="stopTTS()">
+                            href="{{ route('detail', $hero['slug'] ?? '#') }}"
+                            target="_blank"
+                            onmouseenter="playTTS(`{{ addslashes($hero['title']) }}`)"
+                            onmouseleave="stopTTS()">
                             {{ $hero['title'] }}
                         </a>
                     </h3>
@@ -61,10 +73,10 @@
                 <div class="pl-3">
                     <h6 class="mb-1">
                         <a href="{{ route('detail', $news['slug'] ?? $news->news_slug ?? '#') }}"
-                           class="text-dark tts-title"
-                           target="_blank"
-                           onmouseenter="playTTS(`{{ addslashes($news['title']) }}`)"
-                           onmouseleave="stopTTS()">
+                            class="text-dark tts-title"
+                            target="_blank"
+                            onmouseenter="playTTS(`{{ addslashes($news['title']) }}`)"
+                            onmouseleave="stopTTS()">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h6>
@@ -94,10 +106,10 @@
 
                     <h5 class="font-weight-bold">
                         <a href="{{ route('detail', $news['slug'] ?? $news->news_slug ?? '#') }}"
-                           class="text-dark tts-title"
-                           target="_blank"
-                           onmouseenter="playTTS(`{{ addslashes($news['title'] . '. ' . $news['description']) }}`)"
-                           onmouseleave="stopTTS()">
+                            class="text-dark tts-title"
+                            target="_blank"
+                            onmouseenter="playTTS(`{{ addslashes($news['title'] . '. ' . $news['description']) }}`)"
+                            onmouseleave="stopTTS()">
                             {{ \Illuminate\Support\Str::limit($news['title'], 60) }}
                         </a>
                     </h5>
@@ -122,32 +134,32 @@
 
 
 <script>
-let ttsTimeout;
+    let ttsTimeout;
 
-function playTTS(text) {
-    clearTimeout(ttsTimeout);
+    function playTTS(text) {
+        clearTimeout(ttsTimeout);
 
-    ttsTimeout = setTimeout(() => {
+        ttsTimeout = setTimeout(() => {
+            window.speechSynthesis.cancel();
+
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = "id-ID";
+            speech.rate = 1;
+            speech.pitch = 1;
+
+            const voices = speechSynthesis.getVoices();
+            const indo = voices.find(v => v.lang.includes("id"));
+
+            if (indo) {
+                speech.voice = indo;
+            }
+
+            window.speechSynthesis.speak(speech);
+        }, 300); // delay biar gak terlalu sensitif
+    }
+
+    function stopTTS() {
+        clearTimeout(ttsTimeout);
         window.speechSynthesis.cancel();
-
-        const speech = new SpeechSynthesisUtterance(text);
-        speech.lang = "id-ID";
-        speech.rate = 1;
-        speech.pitch = 1;
-
-        const voices = speechSynthesis.getVoices();
-        const indo = voices.find(v => v.lang.includes("id"));
-
-        if (indo) {
-            speech.voice = indo;
-        }
-
-        window.speechSynthesis.speak(speech);
-    }, 300); // delay biar gak terlalu sensitif
-}
-
-function stopTTS() {
-    clearTimeout(ttsTimeout);
-    window.speechSynthesis.cancel();
-}
+    }
 </script>

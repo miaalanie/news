@@ -57,34 +57,6 @@ class FrontendController extends Controller
         }
     }
 
-    public function todayNews()
-    {
-        try {
-            $url = "https://berita-indo-api-next.vercel.app/api/antara-news/terkini";
-
-            $response = Http::get($url);
-
-            if ($response->failed()) {
-                return view('frontend.archive-news', [
-                    'all_news' => []
-                ]);
-            }
-
-            $result = $response->json();
-
-            // ambil data array langsung
-            $all_news = $this->formatNews($result['data']);
-            session(['all_news' => $all_news]); // penting buat detail
-
-            return view('frontend.archive-news', compact('all_news'));
-        } catch (\Exception $e) {
-            dd([
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-            ]);
-        }
-    }
 
     public function detail($slug)
     {
@@ -118,6 +90,37 @@ class FrontendController extends Controller
             ]);
         }
     }
+
+        public function todayNews()
+    {
+        try {
+            $url = "https://berita-indo-api-next.vercel.app/api/antara-news/terkini";
+
+            $response = Http::get($url);
+
+            if ($response->failed()) {
+                return view('frontend.archive-news', [
+                    'all_news' => []
+                ]);
+            }
+
+            $result = $response->json();
+
+            // ambil data array langsung
+            $all_news = $this->formatNews($result['data']);
+            session(['all_news' => $all_news]); // penting buat detail
+
+            return view('frontend.archive-news', compact('all_news'));
+        } catch (\Exception $e) {
+            dd([
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+        }
+    }
+
+
     public function politikNews()
     {
         try {
